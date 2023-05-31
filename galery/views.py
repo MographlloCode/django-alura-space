@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from galery.models import Picture
 
 
 def index(request):
@@ -16,7 +17,12 @@ def index(request):
         10: {"name": "Solaris's Aurora", "description": "CosmicExplorations.net / Solaris Garcia / AuroraLens"},
     }
 
-    return render(request, 'galery/index.html', {"cards": data})
+    pictures = Picture.objects.all()
 
-def image(request):
-    return render(request, 'galery/image.html')
+    return render(request, 'galery/index.html', {"cards": pictures})
+
+def image(request, picture_id):
+
+    picture = get_object_or_404(Picture, pk=picture_id)
+
+    return render(request, 'galery/image.html', {'picture': picture})
