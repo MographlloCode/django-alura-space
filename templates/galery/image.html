@@ -3,10 +3,15 @@
 <section class="conteudo">
   <section class="imagem">
     <div class="imagem__conteudo">
+      {% if picture.picture == '' or picture.picture == null %}
       <img
-        class="imagem__imagem"
-        src="{% static '/assets/imagens/galeria/' %}{{picture.picture}}"
+        class="card__imagem"
+        src="{% static '/assets/imagens/galeria/not-found.png' %}"
+        alt="foto"
       />
+      {% else %}
+      <img class="imagem__imagem" src="{{picture.picture.url}}" />
+      {% endif %}
       <div class="imagem__info">
         <div class="imagem__texto">
           <p class="imagem__titulo">{{picture.name}}</p>

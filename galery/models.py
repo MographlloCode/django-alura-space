@@ -20,4 +20,4 @@ class Picture(models.Model):
     picture_date = models.DateTimeField(default=datetime.now(), blank=False)
 
     def __str__(self):
-        return f'Picture [name={self.name}]'
+        return self.name
