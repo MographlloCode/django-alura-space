@@ -1,9 +1,13 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from galery.models import Picture
+
+from django.contrib import messages
 
 
 def index(request):
-
+    if not request.user.is_authenticated:
+        messages.error(request, 'User is not authenticated')
+        return redirect('login')
 
     pictures = Picture.objects.order_by('-picture_date').filter(published=True)
 
@@ -16,6 +20,10 @@ def image(request, picture_id):
     return render(request, 'galery/image.html', {'picture': picture})
 
 def search(request):
+    if not request.user.is_authenticated:
+        messages.error(request, 'User is not authenticated')
+        return redirect('login')
+    
     pictures = Picture.objects.order_by('-picture_date').filter(published=True)
 
     if 'search' in request.GET:
