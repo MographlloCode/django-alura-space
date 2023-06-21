@@ -63,6 +63,10 @@ def register(request):
     return render(request, "users/register.html", {"form": form})
 
 def logout(request):
+   if not request.user.is_authenticated:
+        messages.error(request, 'User is not logged in')
+        return redirect('login')
+   
    auth.logout(request)
    messages.success(request, 'Logout successfully')
    return redirect('login')
